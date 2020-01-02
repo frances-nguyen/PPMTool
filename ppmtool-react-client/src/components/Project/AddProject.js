@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux' // to connect to the state in redux store
+import { createProject } from '../../actions/projectActions'
 
 class AddProject extends Component {
   constructor() {
@@ -20,17 +23,17 @@ class AddProject extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  onSubmit(e){
-      e.preventDefault();
-      const newProject = {
-        projectName: this.state.projectName,
-        projectIdentifier: this.state.projectIdentifier,
-        description: this.state.description,
-        start_date: this.state.start_date,
-        end_date: this.state.end_date
-      }
+  onSubmit(e) {
+    e.preventDefault()
+    const newProject = {
+      projectName: this.state.projectName,
+      projectIdentifier: this.state.projectIdentifier,
+      description: this.state.description,
+      start_date: this.state.start_date,
+      end_date: this.state.end_date
+    }
 
-      console.log(newProject);
+    this.props.createProject(newProject, this.props.history)
   }
 
   render() {
@@ -106,4 +109,12 @@ class AddProject extends Component {
   }
 }
 
-export default AddProject
+AddProject.propTypes = {
+  createProject: PropTypes.func.isRequired // tells the app the 'creatProject' func is require for this component
+}
+
+export default connect(
+  // connect component to store
+  null,
+  { createProject }
+)(AddProject)
