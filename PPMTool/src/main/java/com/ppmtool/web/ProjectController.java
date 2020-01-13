@@ -16,10 +16,13 @@ import javax.validation.Valid;
 @CrossOrigin
 public class ProjectController {
 
-    @Autowired
-    private ProjectService projectService;
-    @Autowired
-    private MapValidationErrorService mapValidationErrorService;
+    private final ProjectService projectService;
+    private final MapValidationErrorService mapValidationErrorService;
+
+    public ProjectController(ProjectService projectService, MapValidationErrorService mapValidationErrorService) {
+        this.projectService = projectService;
+        this.mapValidationErrorService = mapValidationErrorService;
+    }
 
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result) {
